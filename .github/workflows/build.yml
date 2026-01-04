@@ -4,7 +4,7 @@ jobs:
   build:
     strategy:
       matrix:
-        java: [21, 25]
+        java: [21, 26]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/setup-java@v3
@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '25'
+          java-version: '26'
       - run: ./gradlew :minecraft:minecraft-test:runProductionAutoTestClient --stacktrace --warning-mode=fail
       - uses: actions/upload-artifact@v4
         if: always()

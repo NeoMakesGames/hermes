@@ -50,6 +50,33 @@ public final class FabricMixinBootstrap {
 
 	private static boolean initialized = false;
 
+	/**
+	 * Get the major Java version (e.g., 8, 11, 17, 21, 25, 26).
+	 */
+	private static int getJavaVersion() {
+		String version = System.getProperty("java.version");
+		try {
+			if (version.startsWith("1.")) {
+				// Old format: 1.8.0_xxx -> extract 8
+				int dot = version.indexOf(".", 2);
+				version = version.substring(2, dot != -1 ? dot : version.length());
+			} else {
+				// New format: 11.0.1, 17.0.1, 25, 26 -> extract major version
+				int dot = version.indexOf(".");
+				if (dot != -1) {
+					version = version.substring(0, dot);
+				}
+				// If no dot, the whole string is the version (e.g., "26")
+			}
+			return Integer.parseInt(version);
+		} catch (NumberFormatException | IndexOutOfBoundsException e) {
+			// If we can't parse the version, assume a modern Java version
+			// This is safer than crashing on an unknown format
+			Log.warn(LogCategory.GENERAL, "Could not parse Java version: " + version + ", assuming Java 21");
+			return 21;
+		}
+	}
+
 	public static void init(EnvType side, FabricLoaderImpl loader) {
 		if (initialized) {
 			throw new RuntimeException("FabricMixinBootstrap has already been initialized!");
@@ -57,6 +84,14 @@ public final class FabricMixinBootstrap {
 
 		System.setProperty("mixin.bootstrapService", MixinServiceKnotBootstrap.class.getName());
 		System.setProperty("mixin.service", MixinServiceKnot.class.getName());
+
+		// Mixin Compatibility Workaround: Allow Mixin to work with future Java versions (Java 25/26+)
+		// Only apply these properties when running on Java 25 or higher
+		int javaVersion = getJavaVersion();
+		if (javaVersion >= 25) {
+			System.setProperty("mixin.env.allowActivationInProduction", "true");
+			System.setProperty("mixin.debug.verify", "false");
+		}
 
 		MixinBootstrap.init();
 
