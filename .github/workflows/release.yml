@@ -8,13 +8,19 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '25'
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Download and setup Babylon JDK
+        run: |
+          # Download Babylon early-access build
+          BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
+          
+          curl -L -o /tmp/babylon-jdk.tar.gz "$BABYLON_URL"
+          mkdir -p "${RUNNER_TEMP}/babylon-jdk"
+          tar -xzf /tmp/babylon-jdk.tar.gz -C "${RUNNER_TEMP}/babylon-jdk" --strip-components=1
+          echo "${RUNNER_TEMP}/babylon-jdk/bin" >> $GITHUB_PATH
+          echo "JAVA_HOME=${RUNNER_TEMP}/babylon-jdk" >> $GITHUB_ENV
       - uses: FabricMC/fabric-action-scripts@v2
         id: changelog
         with:

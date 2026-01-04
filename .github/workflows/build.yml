@@ -7,11 +7,21 @@ jobs:
         java: [21, 25]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: ${{ matrix.java }}
       - uses: actions/checkout@v4
+      - name: Download and setup Babylon JDK
+        run: |
+          # Download Babylon early-access build for the appropriate Java version
+          if [ "${{ matrix.java }}" = "21" ]; then
+            BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
+          else
+            BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
+          fi
+          
+          curl -L -o /tmp/babylon-jdk.tar.gz "$BABYLON_URL"
+          mkdir -p "${RUNNER_TEMP}/babylon-jdk"
+          tar -xzf /tmp/babylon-jdk.tar.gz -C "${RUNNER_TEMP}/babylon-jdk" --strip-components=1
+          echo "${RUNNER_TEMP}/babylon-jdk/bin" >> $GITHUB_PATH
+          echo "JAVA_HOME=${RUNNER_TEMP}/babylon-jdk" >> $GITHUB_ENV
       - uses: gradle/actions/wrapper-validation@v4
       - run: ./gradlew build publishToMavenLocal --stacktrace --warning-mode fail
       - uses: actions/upload-artifact@v4
@@ -25,10 +35,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '25'
+      - name: Download and setup Babylon JDK
+        run: |
+          # Download Babylon early-access build
+          BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
+          
+          curl -L -o /tmp/babylon-jdk.tar.gz "$BABYLON_URL"
+          mkdir -p "${RUNNER_TEMP}/babylon-jdk"
+          tar -xzf /tmp/babylon-jdk.tar.gz -C "${RUNNER_TEMP}/babylon-jdk" --strip-components=1
+          echo "${RUNNER_TEMP}/babylon-jdk/bin" >> $GITHUB_PATH
+          echo "JAVA_HOME=${RUNNER_TEMP}/babylon-jdk" >> $GITHUB_ENV
       - run: ./gradlew :minecraft:minecraft-test:runProductionAutoTestClient --stacktrace --warning-mode=fail
       - uses: actions/upload-artifact@v4
         if: always()
