@@ -59,7 +59,7 @@ sourceSets {
 	main {
 		java.srcDirs = ['src/main/java', 'src/main/legacyJava']
 	}
-	java17
+	java26
 }
 
 configurations {
@@ -140,8 +140,8 @@ processResources {
 
 java {
 	withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
+	sourceCompatibility = JavaVersion.VERSION_26
+	targetCompatibility = JavaVersion.VERSION_26
 }
 
 jar {
@@ -240,10 +240,10 @@ tasks.register('proguardJar', ProGuardTask) {
 		}
 	}
 
-	def java8 = javaToolchains.launcherFor {
-		languageVersion = JavaLanguageVersion.of(8)
+	def java26 = javaToolchains.launcherFor {
+		languageVersion = JavaLanguageVersion.of(26)
 	}.get()
-	libraryjars java8.metadata.installationPath.file("jre/lib/rt.jar")
+	libraryjars java26.metadata.installationPath.file("lib/jrt-fs.jar")
 
 	injars fatJar.archiveFile
 	outjars proguardTmpFile
@@ -255,8 +255,8 @@ tasks.register('proguardJar', ProGuardTask) {
 tasks.register('finalJar', Zip) {
 	from zipTree(proguardTmpFile)
 	dependsOn(proguardJar)
-	into('META-INF/versions/17') {
-		from sourceSets.java17.output
+	into('META-INF/versions/26') {
+		from sourceSets.java26.output
 	}
 	destinationDirectory = file("build/libs")
 	archiveExtension = "jar"
@@ -300,7 +300,7 @@ tasks.build.dependsOn "copyJson"
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-	it.options.release = it.name.contains("Java17") ? 17 : 8
+	it.options.release = 26
 }
 
 javadoc {
@@ -308,7 +308,7 @@ javadoc {
 		if (file("README.html").exists()) {
 			overview = "README.html"
 		}
-		source = "8"
+		source = "26"
 		encoding = 'UTF-8'
 		charSet = 'UTF-8'
 		memberLevel = JavadocMemberLevel.PACKAGE
