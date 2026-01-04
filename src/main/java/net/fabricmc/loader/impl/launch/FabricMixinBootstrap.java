@@ -57,6 +57,10 @@ public final class FabricMixinBootstrap {
 
 		System.setProperty("mixin.bootstrapService", MixinServiceKnotBootstrap.class.getName());
 		System.setProperty("mixin.service", MixinServiceKnot.class.getName());
+		
+		// ASM Hack: Allow Mixin to work with future Java versions (Java 25/26+)
+		System.setProperty("mixin.env.allowActivationInProduction", "true");
+		System.setProperty("mixin.debug.verify", "false");
 
 		MixinBootstrap.init();
 
