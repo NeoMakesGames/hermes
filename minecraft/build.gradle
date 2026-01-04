@@ -28,6 +28,9 @@ dependencies {
 sourceSets {
 	main {
 		java.srcDirs = ['src/main/java', 'src/main/legacyJava']
+		java {
+			exclude 'net/fabricmc/loader/impl/game/minecraft/applet/**'
+		}
 	}
 }
 

@@ -55,6 +55,7 @@ public final class FabricMixinBootstrap {
 	 */
 	private static int getJavaVersion() {
 		String version = System.getProperty("java.version");
+
 		try {
 			if (version.startsWith("1.")) {
 				// Old format: 1.8.0_xxx -> extract 8
@@ -63,11 +64,14 @@ public final class FabricMixinBootstrap {
 			} else {
 				// New format: 11.0.1, 17.0.1, 25, 26 -> extract major version
 				int dot = version.indexOf(".");
+
 				if (dot != -1) {
 					version = version.substring(0, dot);
 				}
+
 				// If no dot, the whole string is the version (e.g., "26")
 			}
+
 			return Integer.parseInt(version);
 		} catch (NumberFormatException | IndexOutOfBoundsException e) {
 			// If we can't parse the version, assume a modern Java version
@@ -88,6 +92,7 @@ public final class FabricMixinBootstrap {
 		// Mixin Compatibility Workaround: Allow Mixin to work with future Java versions (Java 25/26+)
 		// Only apply these properties when running on Java 25 or higher
 		int javaVersion = getJavaVersion();
+
 		if (javaVersion >= 25) {
 			System.setProperty("mixin.env.allowActivationInProduction", "true");
 			System.setProperty("mixin.debug.verify", "false");

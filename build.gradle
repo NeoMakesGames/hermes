@@ -16,7 +16,7 @@ plugins {
 	id 'checkstyle'
 	id 'com.diffplug.spotless' version "8.0.0"
 	id 'fabric-loom' version '1.11-SNAPSHOT' apply false
-	id 'com.gradleup.shadow' version '9.2.2'
+	id 'com.gradleup.shadow' version '9.3.0'
 	id 'me.modmuss50.remotesign' version "0.5.0"
 }
 
@@ -253,8 +253,8 @@ tasks.register('proguardJar', ProGuardTask) {
 // As proguard does not support MRJ's we must add the MRJ classes to the final jar
 // Use a Zip task to not alter the manifest
 tasks.register('finalJar', Zip) {
-	from zipTree(proguardTmpFile)
-	dependsOn(proguardJar)
+	from zipTree(fatJar.archiveFile)
+	dependsOn(fatJar)
 	into('META-INF/versions/26') {
 		from sourceSets.java26.output
 	}
