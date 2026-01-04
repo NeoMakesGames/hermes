@@ -14,8 +14,8 @@ plugins {
 
 rootProject.name='fabric-loader'
 
-if (!JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_21)) {
-	throw new UnsupportedOperationException("Fabric Loader requires Java 21+ to build.")
+if (!JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_26)) {
+	throw new UnsupportedOperationException("Fabric Loader requires Java 26+ to build.")
 }
 
 include "minecraft"
