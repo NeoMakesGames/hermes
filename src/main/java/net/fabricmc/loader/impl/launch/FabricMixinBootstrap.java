@@ -72,7 +72,7 @@ public final class FabricMixinBootstrap {
 		} catch (NumberFormatException | IndexOutOfBoundsException e) {
 			// If we can't parse the version, assume a modern Java version
 			// This is safer than crashing on an unknown format
-			Log.warn(LogCategory.GENERAL, "Could not parse Java version: " + version + ", assuming Java 21+");
+			Log.warn(LogCategory.GENERAL, "Could not parse Java version: " + version + ", assuming Java 21");
 			return 21;
 		}
 	}
@@ -84,8 +84,8 @@ public final class FabricMixinBootstrap {
 
 		System.setProperty("mixin.bootstrapService", MixinServiceKnotBootstrap.class.getName());
 		System.setProperty("mixin.service", MixinServiceKnot.class.getName());
-		
-		// ASM Hack: Allow Mixin to work with future Java versions (Java 25/26+)
+
+		// Mixin Compatibility Workaround: Allow Mixin to work with future Java versions (Java 25/26+)
 		// Only apply these properties when running on Java 25 or higher
 		int javaVersion = getJavaVersion();
 		if (javaVersion >= 25) {
