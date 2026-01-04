@@ -10,14 +10,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download and setup Babylon JDK
         run: |
-          # Download Babylon early-access build for the appropriate Java version
-          if [ "${{ matrix.java }}" = "21" ]; then
-            BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
-          else
-            BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
-          fi
+          # Download Babylon early-access build (based on JDK 24)
+          # Note: Babylon is currently only available as JDK 24 EA builds
+          BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
           
-          curl -L -o /tmp/babylon-jdk.tar.gz "$BABYLON_URL"
+          curl -fL -o /tmp/babylon-jdk.tar.gz "$BABYLON_URL"
           mkdir -p "${RUNNER_TEMP}/babylon-jdk"
           tar -xzf /tmp/babylon-jdk.tar.gz -C "${RUNNER_TEMP}/babylon-jdk" --strip-components=1
           echo "${RUNNER_TEMP}/babylon-jdk/bin" >> $GITHUB_PATH
@@ -37,10 +34,10 @@ jobs:
           fetch-depth: 0
       - name: Download and setup Babylon JDK
         run: |
-          # Download Babylon early-access build
+          # Download Babylon early-access build (based on JDK 24)
           BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
           
-          curl -L -o /tmp/babylon-jdk.tar.gz "$BABYLON_URL"
+          curl -fL -o /tmp/babylon-jdk.tar.gz "$BABYLON_URL"
           mkdir -p "${RUNNER_TEMP}/babylon-jdk"
           tar -xzf /tmp/babylon-jdk.tar.gz -C "${RUNNER_TEMP}/babylon-jdk" --strip-components=1
           echo "${RUNNER_TEMP}/babylon-jdk/bin" >> $GITHUB_PATH
