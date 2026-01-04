@@ -7,6 +7,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download and setup Babylon JDK
         run: |
+          set -e
           # Download Babylon early-access build (based on JDK 24)
           # Note: Babylon is currently only available as JDK 24 EA builds
           BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
@@ -31,6 +32,7 @@ jobs:
           fetch-depth: 0
       - name: Download and setup Babylon JDK
         run: |
+          set -e
           # Download Babylon early-access build (based on JDK 24)
           BABYLON_URL="https://download.java.net/java/early_access/babylon/1/openjdk-24-babylon+1-90_linux-x64_bin.tar.gz"
           
