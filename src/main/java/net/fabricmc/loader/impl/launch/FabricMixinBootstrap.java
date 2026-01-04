@@ -55,15 +55,26 @@ public final class FabricMixinBootstrap {
 	 */
 	private static int getJavaVersion() {
 		String version = System.getProperty("java.version");
-		if (version.startsWith("1.")) {
-			version = version.substring(2, 3);
-		} else {
-			int dot = version.indexOf(".");
-			if (dot != -1) {
-				version = version.substring(0, dot);
+		try {
+			if (version.startsWith("1.")) {
+				// Old format: 1.8.0_xxx -> extract 8
+				int dot = version.indexOf(".", 2);
+				version = version.substring(2, dot != -1 ? dot : version.length());
+			} else {
+				// New format: 11.0.1, 17.0.1, 25, 26 -> extract major version
+				int dot = version.indexOf(".");
+				if (dot != -1) {
+					version = version.substring(0, dot);
+				}
+				// If no dot, the whole string is the version (e.g., "26")
 			}
+			return Integer.parseInt(version);
+		} catch (NumberFormatException | IndexOutOfBoundsException e) {
+			// If we can't parse the version, assume a modern Java version
+			// This is safer than crashing on an unknown format
+			Log.warn(LogCategory.GENERAL, "Could not parse Java version: " + version + ", assuming Java 21+");
+			return 21;
 		}
-		return Integer.parseInt(version);
 	}
 
 	public static void init(EnvType side, FabricLoaderImpl loader) {
