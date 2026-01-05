@@ -82,7 +82,7 @@ public final class Knot extends FabricLauncherBase {
 	public ClassLoader init(String[] args) {
 		setProperties(properties);
 
-		// configure fabric vars
+		// configure hermes vars
 		if (envType == null) {
 			String side = System.getProperty(SystemProperties.SIDE);
 			if (side == null) throw new RuntimeException("Please specify side or use a dedicated Knot!");
@@ -127,10 +127,10 @@ public final class Knot extends FabricLauncherBase {
 
 		provider = createGameProvider(args);
 		Log.finishBuiltinConfig();
-		Log.info(LogCategory.GAME_PROVIDER, "Loading %s %s with Fabric Loader %s", provider.getGameName(), provider.getRawGameVersion(), FabricLoaderImpl.VERSION);
+		Log.info(LogCategory.GAME_PROVIDER, "Loading %s %s with Hermes Loader %s", provider.getGameName(), provider.getRawGameVersion(), FabricLoaderImpl.VERSION);
 
 		// Setup classloader
-		// TODO: Provide KnotCompatibilityClassLoader in non-exclusive-Fabric pre-1.13 environments?
+		// TODO: Provide KnotCompatibilityClassLoader in non-exclusive-Hermes pre-1.13 environments?
 		boolean useCompatibility = provider.requiresUrlClassLoader() || SystemProperties.isSet(SystemProperties.USE_COMPAT_CL);
 		classLoader = KnotClassLoaderInterface.create(useCompatibility, isDevelopment(), envType, provider);
 		ClassLoader cl = classLoader.getClassLoader();
@@ -209,7 +209,7 @@ public final class Knot extends FabricLauncherBase {
 	}
 
 	/**
-	 * Find game provider embedded into the Fabric Loader jar, best effort.
+	 * Find game provider embedded into the Hermes Loader jar, best effort.
 	 *
 	 * <p>This is faster than going through service loader because it only looks at a single jar.
 	 */

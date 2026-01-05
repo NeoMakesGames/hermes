@@ -38,7 +38,7 @@ import net.fabricmc.loader.impl.util.SystemProperties;
  * - dumps previous log output to a log file if not closed/relayed yet
  */
 final class BuiltinLogHandler extends ConsoleLogHandler {
-	private static final String DEFAULT_LOG_FILE = "fabricloader.log";
+	private static final String DEFAULT_LOG_FILE = "hermesloader.log";
 
 	private boolean configured;
 	private boolean enableOutput;

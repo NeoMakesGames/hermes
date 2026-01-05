@@ -74,7 +74,7 @@ public final class ModDiscoverer {
 	private final EnvType envType = FabricLoaderImpl.INSTANCE.getEnvironmentType();
 	private final Map<Long, ModScanTask> jijDedupMap = new ConcurrentHashMap<>(); // avoids reading the same jar twice
 	private final List<NestedModInitData> nestedModInitDatas = Collections.synchronizedList(new ArrayList<>()); // breaks potential cycles from deduplication
-	private final List<Path> nonFabricMods = Collections.synchronizedList(new ArrayList<>());
+	private final List<Path> nonHermesMods = Collections.synchronizedList(new ArrayList<>());
 
 	public ModDiscoverer(VersionOverrides versionOverrides, DependencyOverrides depOverrides) {
 		this.versionOverrides = versionOverrides;
@@ -116,7 +116,7 @@ public final class ModDiscoverer {
 		// add builtin mods
 		for (BuiltinMod mod : loader.getGameProvider().getBuiltinMods()) {
 			if (!(mod.metadata.getVersion() instanceof SemanticVersion)) {
-				String error = String.format("%s uses the non-semantic version %s, which doesn't support range comparisons and may cause mod dependencies against it to fail unexpectedly. Consider updating Fabric Loader or explicitly specifying the game version with the fabric.gameVersion system property.",
+				String error = String.format("%s uses the non-semantic version %s, which doesn't support range comparisons and may cause mod dependencies against it to fail unexpectedly. Consider updating Hermes Loader or explicitly specifying the game version with the fabric.gameVersion system property.",
 						mod.metadata.getId(), mod.metadata.getVersion());
 
 				if (loader.isDevelopmentEnvironment()) { // fail hard in-dev
@@ -217,8 +217,8 @@ public final class ModDiscoverer {
 		return new ArrayList<>(ret);
 	}
 
-	public List<Path> getNonFabricMods() {
-		return Collections.unmodifiableList(nonFabricMods);
+	public List<Path> getNonHermesMods() {
+		return Collections.unmodifiableList(nonHermesMods);
 	}
 
 	// retrieve set of disabled mod ids from system property
@@ -322,7 +322,7 @@ public final class ModDiscoverer {
 				ZipEntry entry = zf.getEntry("fabric.mod.json");
 
 				if (entry == null) {
-					nonFabricMods.add(path);
+					nonHermesMods.add(path);
 					return null;
 				}
 

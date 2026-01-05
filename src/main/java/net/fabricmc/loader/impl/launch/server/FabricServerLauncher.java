@@ -85,22 +85,31 @@ public class FabricServerLauncher {
 		if (!Files.exists(serverJar)) {
 			System.err.println("The Minecraft server .JAR is missing (" + serverJar + ")!");
 			System.err.println();
-			System.err.println("Fabric's server-side launcher expects the server .JAR to be provided.");
-			System.err.println("You can edit its location in fabric-server-launcher.properties.");
+			System.err.println("Hermes's server-side launcher expects the server .JAR to be provided.");
+			System.err.println("You can edit its location in hermes-server-launcher.properties.");
 			System.err.println();
-			System.err.println("Without the official Minecraft server .JAR, Fabric Loader cannot launch.");
+			System.err.println("Without the official Minecraft server .JAR, Hermes Loader cannot launch.");
 			throw new RuntimeException("Missing game jar at " + serverJar);
 		}
 	}
 
 	private static String getServerJarPath() throws IOException {
-		// Pre-load "fabric-server-launcher.properties"
-		Path propertiesFile = Paths.get("fabric-server-launcher.properties");
+		// Pre-load "hermes-server-launcher.properties"
+		Path propertiesFile = Paths.get("hermes-server-launcher.properties");
 		Properties properties = new Properties();
 
 		if (Files.exists(propertiesFile)) {
 			try (Reader reader = Files.newBufferedReader(propertiesFile)) {
 				properties.load(reader);
+			}
+		} else {
+			// Fallback to "fabric-server-launcher.properties" for compatibility
+			Path oldPropertiesFile = Paths.get("fabric-server-launcher.properties");
+
+			if (Files.exists(oldPropertiesFile)) {
+				try (Reader reader = Files.newBufferedReader(oldPropertiesFile)) {
+					properties.load(reader);
+				}
 			}
 		}
 
@@ -112,7 +121,7 @@ public class FabricServerLauncher {
 			properties.put("serverJar", "server.jar");
 
 			try (Writer writer = Files.newBufferedWriter(propertiesFile)) {
-				properties.store(writer, null);
+				properties.store(writer, "Hermes Server Launcher properties");
 			}
 		}
 

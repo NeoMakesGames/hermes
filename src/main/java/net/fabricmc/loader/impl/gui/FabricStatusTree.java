@@ -68,16 +68,16 @@ public final class FabricStatusTree {
 	public static final String ICON_TYPE_FOLDER = "folder";
 	/** Generic (unknown contents) file. */
 	public static final String ICON_TYPE_UNKNOWN_FILE = "file";
-	/** Generic non-Fabric jar file. */
+	/** Generic non-Hermes jar file. */
 	public static final String ICON_TYPE_JAR_FILE = "jar";
-	/** Generic Fabric-related jar file. */
-	public static final String ICON_TYPE_FABRIC_JAR_FILE = "jar+fabric";
-	/** Something related to Fabric (It's not defined what exactly this is for, but it uses the main Fabric logo). */
-	public static final String ICON_TYPE_FABRIC = "fabric";
+	/** Generic Hermes-related jar file. */
+	public static final String ICON_TYPE_HERMES_JAR_FILE = "jar+hermes";
+	/** Something related to Hermes (It's not defined what exactly this is for, but it uses the main Hermes logo). */
+	public static final String ICON_TYPE_HERMES = "hermes";
 	/** Generic JSON file. */
 	public static final String ICON_TYPE_JSON = "json";
 	/** A file called "fabric.mod.json". */
-	public static final String ICON_TYPE_FABRIC_JSON = "json+fabric";
+	public static final String ICON_TYPE_HERMES_JSON = "json+hermes";
 	/** Java bytecode class file. */
 	public static final String ICON_TYPE_JAVA_CLASS = "java_class";
 	/** A folder inside of a Java JAR. */

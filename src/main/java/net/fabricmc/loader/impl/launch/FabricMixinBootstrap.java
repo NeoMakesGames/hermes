@@ -83,7 +83,7 @@ public final class FabricMixinBootstrap {
 
 	public static void init(EnvType side, FabricLoaderImpl loader) {
 		if (initialized) {
-			throw new RuntimeException("FabricMixinBootstrap has already been initialized!");
+			throw new RuntimeException("HermesMixinBootstrap has already been initialized!");
 		}
 
 		System.setProperty("mixin.bootstrapService", MixinServiceKnotBootstrap.class.getName());
@@ -116,7 +116,7 @@ public final class FabricMixinBootstrap {
 					try {
 						MixinIntermediaryDevRemapper remapper = new MixinIntermediaryDevRemapper(mappings, modNs, runtimeNs);
 						MixinEnvironment.getDefaultEnvironment().getRemappers().add(remapper);
-						Log.info(LogCategory.MIXIN, "Loaded Fabric development mappings for mixin remapper!");
+						Log.info(LogCategory.MIXIN, "Loaded Hermes development mappings for mixin remapper!");
 					} catch (Exception e) {
 						Log.error(LogCategory.MIXIN, "Fabric development environment setup error - the game will probably crash soon!", e);
 					}
@@ -158,7 +158,7 @@ public final class FabricMixinBootstrap {
 		private static final List<LoaderMixinVersionEntry> versions = new ArrayList<>();
 
 		static {
-			// maximum loader version and bundled fabric mixin version, DESCENDING ORDER, LATEST FIRST
+			// maximum loader version and bundled Hermes mixin version, DESCENDING ORDER, LATEST FIRST
 			// loader versions with new mixin versions need to be added here
 
 			addVersion("0.18.4", FabricUtil.COMPATIBILITY_0_17_0);

@@ -77,9 +77,9 @@ public final class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
 	public static final int ASM_VERSION = Opcodes.ASM9;
 
 	public static final String VERSION = "0.18.4";
-	public static final String MOD_ID = "fabricloader";
+	public static final String MOD_ID = "hermesloader";
 
-	public static final String CACHE_DIR_NAME = ".fabric"; // relative to game dir
+	public static final String CACHE_DIR_NAME = ".hermes"; // relative to game dir
 	private static final String PROCESSED_MODS_DIR_NAME = "processedMods"; // relative to cache dir
 	public static final String REMAPPED_JARS_DIR_NAME = "remappedJars"; // relative to cache dir
 	private static final String TMP_DIR_NAME = "tmp"; // relative to cache dir
@@ -236,7 +236,7 @@ public final class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
 		modCandidates = ModResolver.resolve(modCandidates, getEnvironmentType(), envDisabledMods);
 
 		dumpModList(modCandidates);
-		dumpNonFabricMods(discoverer.getNonFabricMods());
+		dumpNonHermesMods(discoverer.getNonHermesMods());
 
 		Path cacheDir = gameDir.resolve(CACHE_DIR_NAME);
 		Path outputdir = cacheDir.resolve(PROCESSED_MODS_DIR_NAME);
@@ -291,16 +291,16 @@ public final class FabricLoaderImpl extends net.fabricmc.loader.FabricLoader {
 	}
 
 	@VisibleForTesting
-	public void dumpNonFabricMods(List<Path> nonFabricMods) {
-		if (nonFabricMods.isEmpty()) return;
+	public void dumpNonHermesMods(List<Path> nonHermesMods) {
+		if (nonHermesMods.isEmpty()) return;
 		StringBuilder outputText = new StringBuilder();
 
-		for (Path nonFabricMod : nonFabricMods) {
-			outputText.append("\n\t- ").append(nonFabricMod.getFileName());
+		for (Path nonHermesMod : nonHermesMods) {
+			outputText.append("\n\t- ").append(nonHermesMod.getFileName());
 		}
 
-		int modsCount = nonFabricMods.size();
-		Log.warn(LogCategory.GENERAL, "Found %d non-fabric mod%s:%s", modsCount, modsCount != 1 ? "s" : "", outputText);
+		int modsCount = nonHermesMods.size();
+		Log.warn(LogCategory.GENERAL, "Found %d non-Hermes mod%s:%s", modsCount, modsCount != 1 ? "s" : "", outputText);
 	}
 
 	private void dumpModList(List<ModCandidateImpl> mods) {

@@ -135,7 +135,7 @@ public abstract class FabricLauncherBase implements FabricLauncher {
 
 	protected static void finishMixinBootstrapping() {
 		if (mixinReady) {
-			throw new RuntimeException("Must not call FabricLauncherBase.finishMixinBootstrapping() twice!");
+			throw new RuntimeException("Must not call HermesLauncherBase.finishMixinBootstrapping() twice!");
 		}
 
 		try {

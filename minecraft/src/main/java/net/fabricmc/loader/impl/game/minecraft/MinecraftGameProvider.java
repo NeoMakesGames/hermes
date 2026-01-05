@@ -279,11 +279,11 @@ public class MinecraftGameProvider implements GameProvider {
 		switch (envType) {
 		case CLIENT:
 			if (!argMap.containsKey("accessToken")) {
-				argMap.put("accessToken", "FabricMC");
+				argMap.put("accessToken", "Hermes");
 			}
 
 			if (!argMap.containsKey("version")) {
-				argMap.put("version", "Fabric");
+				argMap.put("version", "Hermes");
 			}
 
 			String versionType = "";
@@ -292,7 +292,7 @@ public class MinecraftGameProvider implements GameProvider {
 				versionType = argMap.get("versionType") + "/";
 			}
 
-			argMap.put("versionType", versionType + "Fabric");
+			argMap.put("versionType", versionType + "Hermes");
 
 			if (!argMap.containsKey("gameDir")) {
 				argMap.put("gameDir", getLaunchDirectory(argMap).toAbsolutePath().normalize().toString());

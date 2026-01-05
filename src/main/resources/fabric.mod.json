@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "id": "fabricloader",
-  "name": "Fabric Loader",
+  "id": "hermesloader",
+  "name": "Hermes Loader",
   "version": "${version}",
   "environment": "*",
   "description": "The base mod loader.",
@@ -12,8 +12,12 @@
     "sources": "https://github.com/FabricMC/fabric-loader"
   },
   "license": "Apache-2.0",
-  "icon": "assets/fabricloader/icon.png",
+  "icon": "assets/hermesloader/icon.png",
+  "provides": [
+    "fabricloader",
+    "fabric-loader"
+  ],
   "authors": [
-    "FabricMC"
+    "Hermes"
   ]
 }

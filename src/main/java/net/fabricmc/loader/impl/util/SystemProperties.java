@@ -17,7 +17,7 @@
 package net.fabricmc.loader.impl.util;
 
 public final class SystemProperties {
-	// whether fabric loader is running in a development environment / mode, affects class path mod discovery, remapping, logging, ...
+	// whether Hermes Loader is running in a development environment / mode, affects class path mod discovery, remapping, logging, ...
 	public static final String DEVELOPMENT = "fabric.development";
 	// whether to use a class loader that is an instance of URLClassLoader
 	public static final String USE_COMPAT_CL = "fabric.loader.useCompatibilityClassLoader";
@@ -86,7 +86,7 @@ public final class SystemProperties {
 	public static final String DEBUG_REPLACE_VERSION = "fabric.debug.replaceVersion";
 	// deobfuscate the game jar with the classpath
 	public static final String DEBUG_DEOBFUSCATE_WITH_CLASSPATH = "fabric.debug.deobfuscateWithClasspath";
-	// whether fabric loader is running in a unit test, this affects logging classpath setup
+	// whether Hermes Loader is running in a unit test, this affects logging classpath setup
 	public static final String UNIT_TEST = "fabric.unitTest";
 
 	public static boolean isSet(String property) {

@@ -59,7 +59,7 @@ public final class LoaderUtil {
 
 	public static void verifyNotInTargetCl(Class<?> cls) {
 		if (cls.getClassLoader().getClass().getName().equals("net.fabricmc.loader.impl.launch.knot.KnotClassLoader")) {
-			// This usually happens when fabric loader has been added to the target class loader. This is a bad state.
+			// This usually happens when Hermes Loader has been added to the target class loader. This is a bad state.
 			// Such additions may be indirect, a JAR can use the Class-Path manifest attribute to drag additional
 			// libraries with it, likely recursively.
 			throw new IllegalStateException("trying to load "+cls.getName()+" from target class loader");
@@ -71,8 +71,8 @@ public final class LoaderUtil {
 			List<URL> resources = Collections.list(LoaderUtil.class.getClassLoader().getResources(FABRIC_LOADER_CLASS));
 
 			if (resources.size() > 1) {
-				// This usually happens when fabric loader has been added to the classpath more than once.
-				throw new IllegalStateException("duplicate fabric loader classes found on classpath: " + resources.stream().map(URL::toString).collect(Collectors.joining(", ")));
+				// This usually happens when Hermes Loader has been added to the classpath more than once.
+				throw new IllegalStateException("duplicate Hermes Loader classes found on classpath: " + resources.stream().map(URL::toString).collect(Collectors.joining(", ")));
 			} else if (resources.size() < 1) {
 				throw new AssertionError(FABRIC_LOADER_CLASS + " not detected on the classpath?! (perhaps it was renamed?)");
 			}

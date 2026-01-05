@@ -452,3 +452,17 @@ task checkVersion {
 
 publish.mustRunAfter checkVersion
 github.mustRunAfter checkVersion
+
+tasks.register('deploy') {
+	dependsOn finalJar
+	doLast {
+		def dest = file("E:/minecraft/Prism Launcher/libraries/net/hermes/hermes-loader/0.18.4+local/hermes-loader-0.18.4+local.jar")
+		dest.parentFile.mkdirs()
+		copy {
+			from finalJar.archiveFile
+			into dest.parentFile
+			rename { dest.name }
+		}
+		println "Deployed to ${dest}"
+	}
+}

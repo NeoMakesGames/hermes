@@ -1,12 +1,14 @@
 # Ignore everything
 /*
 
+# Except these files and folders
 # Folders
 !/gradle
 !/src
 !/.github
 
 # Files
+!/BUILDING.md
 !/.gitattributes
 !/.gitignore
 !/.editorconfig

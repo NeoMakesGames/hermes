@@ -60,7 +60,7 @@ public class LogNonHermesModsTest {
 
 		FabricLoaderImpl.INSTANCE.dumpNonHermesMods(nonHermesMods);
 
-		String expectedLog = "Found 3 non-hermes mods:"
+		String expectedLog = "Found 3 non-Hermes mods:"
 				+ "\n\t- non_fabric_mod1.jar"
 				+ "\n\t- non_fabric_mod2.jar"
 				+ "\n\t- non_fabric_mod3.jar";
